@@ -1,9 +1,34 @@
 import { issues } from "../data/issues.js";
 const appleBrandId = "AE";
 
-export const getAllIssues = (req, res) => {
-  res.json(issues);
+export const getAllTickets = (req, res) => {
+  const { email, device, issue, brand, phone } = req.query;
+  let result = tickets;
+
+  if (email) {
+    const norm = String(email).trim().toLowerCase();
+    result = result.filter(t => String(t.email).toLowerCase() === norm);
+  }
+  if (brand) {
+    const norm = String(brand).trim().toUpperCase();
+    result = result.filter(t => String(t.brandName).toUpperCase().includes(norm));
+  }
+  if (device) {
+    const norm = String(device).trim().toUpperCase();
+    result = result.filter(t => String(t.device).toUpperCase().includes(norm));
+  }
+  if (issue) {
+    const norm = String(issue).trim().toUpperCase();
+    result = result.filter(t => String(t.issue).toUpperCase().includes(norm));
+  }
+  if (phone) {
+    const norm = String(phone).trim();
+    result = result.filter(t => String(t.phoneNumber).includes(norm));
+  }
+
+  res.status(200).json(result);
 };
+
 
 export const getIssueById = (req, res) => {
   const id = Number(req.params.id);

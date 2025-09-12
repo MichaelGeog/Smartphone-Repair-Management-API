@@ -1,7 +1,15 @@
 import { apple, appleBrandId } from "../data/apple.js";
 
 export const getAllDevices = (req, res) => {
-  res.status(200).json(apple);
+  const { model } = req.query; // ?model=12 PRO
+  let result = apple;
+
+  if (model) {
+    const norm = String(model).trim().toUpperCase();
+    result = result.filter(d => d.model.includes(norm));
+  }
+
+  res.status(200).json(result);
 };
 
 export const getDeviceById = (req, res) => {

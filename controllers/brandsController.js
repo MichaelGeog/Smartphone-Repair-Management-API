@@ -1,7 +1,19 @@
 import { brands } from "../data/brands.js";
 
 export const getAllUsers = (req, res) => {
-  res.status(200).json(brands);
+  const { name, id } = req.query; // ?name=APP or ?id=AE
+  let result = brands;
+
+  if (id) {
+    const norm = String(id).trim().toUpperCase();
+    result = result.filter(b => b.brandId === norm);
+  }
+  if (name) {
+    const norm = String(name).trim().toUpperCase();
+    result = result.filter(b => b.brandName.includes(norm));
+  }
+
+  res.status(200).json(result);
 };
 
 export const createUser = (req, res) => {
