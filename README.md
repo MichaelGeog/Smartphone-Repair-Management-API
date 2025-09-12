@@ -26,76 +26,76 @@ A small Express.js project for managing brands, Apple devices, issues (with pric
 
 ## API Endpoints
 
-- Brands
+### Brands
 
-GET /api/brands
-Filters: ?name=APPLE, ?id=AE
+- GET /api/brands
+  Filters: ?name=APPLE, ?id=AE
 
-POST /api/brands
+- POST /api/brands
 
-GET /api/brands/:id
+- GET /api/brands/:id
 
-PATCH /api/brands/:id
+- PATCH /api/brands/:id
 
-DELETE /api/brands/:id
+- DELETE /api/brands/:id
 
-- Apple Devices
+### Apple Devices
 
-GET /api/brands/apple
-Filters: ?model=PRO
+- GET /api/brands/apple
+  Filters: ?model=PRO
 
-POST /api/brands/apple
+- POST /api/brands/apple
 
-GET /api/brands/apple/:id
+- GET /api/brands/apple/:id
 
-PATCH /api/brands/apple/:id
+- PATCH /api/brands/apple/:id
 
-DELETE /api/brands/apple/:id
+- DELETE /api/brands/apple/:id
 
-- Issues
+### Issues
 
-GET /api/issues
-Filters: ?issue=BATTERY&models=ALL&minPrice=50&maxPrice=150
+- GET /api/issues
+  Filters: ?issue=BATTERY&models=ALL&minPrice=50&maxPrice=150
 
-POST /api/issues
+- POST /api/issues
 
-GET /api/issues/:id
+- GET /api/issues/:id
 
-PATCH /api/issues/:id
+- PATCH /api/issues/:id
 
-DELETE /api/issues/:id
+- DELETE /api/issues/:id
 
-- Tickets
+### Tickets
 
-GET /api/tickets
-Filters: ?email=john@example.com&brand=APPLE&device=IPHONE%2012&issue=BATTERY&phone=555
+- GET /api/tickets
+  Filters: ?email=john@example.com&brand=APPLE&device=IPHONE%2012&issue=BATTERY&phone=555
 
-POST /api/tickets
+- POST /api/tickets
 
-GET /api/tickets/:id
+- GET /api/tickets/:id
 
-PATCH /api/tickets/:id
+- PATCH /api/tickets/:id
 
-DELETE /api/tickets/:id
+- DELETE /api/tickets/:id
 
-- Middleware
+### Middleware
 
-logger – logs [ISO time] METHOD URL
+- logger – logs [ISO time] METHOD URL
 
-requireJson – enforces Content-Type: application/json on POST/PUT/PATCH
+- requireJson – enforces Content-Type: application/json on POST/PUT/PATCH
 
-notFound – forwards unknown routes as { status: 404 }
+- notFound – forwards unknown routes as { status: 404 }
 
-errorHandler – unified JSON errors { error: "message" }
+- errorHandler – unified JSON errors { error: "message" }
 
-- Tickets View (EJS)
+### Tickets View (EJS)
 
-Route: GET /tickets
+- Route: GET /tickets
 
-Template: views/tickets.ejs
+- Template: views/tickets.ejs
 
-CSS: public/styles.css (served via express.static)
+- CSS: public/styles.css (served via express.static)
 
-Form fields: full name, phone, email, brand (select), device (select), issue (select), price (readonly)
+- Form fields: full name, phone, email, brand (select), device (select), issue (select), price (readonly)
 
-Behavior: price auto-fills from selected issue; POSTs JSON to /api/tickets; the new ticket row is appended to the table.
+- Behavior: price auto-fills from selected issue; POSTs JSON to /api/tickets; the new ticket row is appended to the table.
