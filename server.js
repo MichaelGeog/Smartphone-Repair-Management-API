@@ -1,6 +1,7 @@
 import express from "express";
 import brandsRoute from "./routes/brandsRoute.js";
 import appleRoute from "./routes/appleRoute.js";
+import issuesRoute from "./routes/issuesRoute.js";
 
 const app = express();
 const port = 3000;
@@ -8,6 +9,7 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/brands/apple/issues", issuesRoute);
 app.use("/api/brands/apple", appleRoute);
 app.use("/api/brands", brandsRoute);
 
