@@ -6,7 +6,6 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/brandsController.js";
-import { format } from "path";
 
 const router = express.Router();
 

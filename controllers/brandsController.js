@@ -6,15 +6,21 @@ export const getAllUsers = (req, res) => {
 
 export const createUser = (req, res) => {
   let { brandName } = req.body;
+  if (!brandName)
+    return res.status(400).json({ error: "Brand name is required" });
+
   const inDB = brands.find((b) => b.brandName === brandName.toUpperCase());
   if (inDB) return res.status(409).json({ error: "Brand Already Exist" });
+
   const brandId =
     brandName[0].toUpperCase() + brandName[brandName.length - 1].toUpperCase();
   brandName = brandName.toUpperCase();
+
   let newBrand = {
     brandId,
     brandName,
   };
+
   brands.push(newBrand);
   res.status(201).json(`Brand ${brandName.toUpperCase()} Created`);
 };
