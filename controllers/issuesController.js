@@ -1,7 +1,7 @@
 import { issues } from "../data/issues.js";
 const appleBrandId = "AE";
 
-export const getAllTickets = (req, res) => {
+export const getAllIssues = (req, res) => {
   const { email, device, issue, brand, phone } = req.query;
   let result = tickets;
 

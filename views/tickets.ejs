@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tickets</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Tickets</h1>
+    </header>
+
+    <!-- Create Ticket -->
+    <section class="card">
+      <h2>Create Ticket</h2>
+      <form id="createForm" class="grid">
+        <input name="fullName" id="fullName" placeholder="FULL NAME" required />
+        <input
+          name="phoneNumber"
+          id="phoneNumber"
+          placeholder="PHONE NUMBER"
+          required
+        />
+        <input
+          name="email"
+          id="email"
+          placeholder="EMAIL"
+          type="email"
+          required
+        />
+
+        <select id="brandName" required>
+          <option value="" disabled selected hidden>SELECT BRAND</option>
+          <% brands.forEach(b => { %>
+          <option value="<%= b.brandName %>"><%= b.brandName %></option>
+          <% }) %>
+        </select>
+
+        <select id="device" required>
+          <option value="" disabled selected hidden>SELECT DEVICE</option>
+          <% apple.forEach(d => { %>
+          <option value="<%= d.model %>"><%= d.model %></option>
+          <% }) %>
+        </select>
+
+        <select id="issue" required>
+          <option value="" disabled selected hidden>SELECT ISSUE</option>
+          <% issues.forEach(i => { %>
+          <option value="<%= i.issue %>" data-price="<%= i.price %>">
+            <%= i.issue %>
+          </option>
+          <% }) %>
+        </select>
+
+        <input id="price" placeholder="PRICE" readonly />
+
+        <button type="submit">Create Ticket</button>
+      </form>
+    </section>
+
+    <!-- Tickets table -->
+    <section class="card">
+      <h2>Tickets</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>FULL NAME</th>
+            <th>PHONE</th>
+            <th>EMAIL</th>
+            <th>BRAND</th>
+            <th>DEVICE</th>
+            <th>ISSUE</th>
+            <th>PRICE</th>
+          </tr>
+        </thead>
+        <tbody id="ticketsBody">
+          <% tickets.forEach(t => { %>
+          <tr>
+            <td><%= t.ticketId %></td>
+            <td><%= t.fullName %></td>
+            <td><%= t.phoneNumber %></td>
+            <td><%= t.email %></td>
+            <td><%= t.brandName %></td>
+            <td><%= t.device %></td>
+            <td><%= t.issue %></td>
+            <td>$<%= t.price %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+
+    <script>
+      (function () {
+        const form = document.getElementById("createForm");
+        const tbody = document.getElementById("ticketsBody");
+        const priceEl = document.getElementById("price");
+        const issueEl = document.getElementById("issue");
+
+        // Fill price from selected option's data-price
+        issueEl.addEventListener("change", () => {
+          const opt = issueEl.options[issueEl.selectedIndex];
+          priceEl.value = opt && opt.dataset.price ? opt.dataset.price : "";
+        });
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const payload = {
+            fullName: document.getElementById("fullName").value,
+            phoneNumber: document.getElementById("phoneNumber").value,
+            email: document.getElementById("email").value,
+            brandName: document.getElementById("brandName").value,
+            device: document.getElementById("device").value,
+            issue: document.getElementById("issue").value,
+          };
+
+          const res = await fetch("/api/tickets", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            alert(data?.error || "Failed to create ticket");
+            return;
+          }
+
+          // server-computed price (authoritative)
+          priceEl.value = data.price;
+
+          // prepend new row
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${data.ticketId}</td>
+            <td>${data.fullName}</td>
+            <td>${data.phoneNumber}</td>
+            <td>${data.email}</td>
+            <td>${data.brandName}</td>
+            <td>${data.device}</td>
+            <td>${data.issue}</td>
+            <td>$${data.price}</td>
+          `;
+          tbody.append(tr);
+        });
+      })();
+    </script>
+  </body>
+</html>
