@@ -1,4 +1,4 @@
-# Smartphone Repair Management API (SBA318)
+# Smartphone Repair Management API 
 
 A small Express.js project for managing brands, Apple devices, issues (with prices), and customer tickets. Includes RESTful CRUD routes, query-parameter filtering, custom middleware, and an EJS view to create and list tickets.
 
